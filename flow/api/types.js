@@ -50,12 +50,12 @@ type PublicKey = {
 }
 
 type WorkerRequestType = 'setup'
+	| 'generateSignupKeys'
 	| 'signup'
 	| 'createSession'
 	| 'createExternalSession'
 	| 'loadExternalPasswordChannels'
 	| 'sendExternalPasswordSms'
-	| 'retrieveExternalSmsPassword'
 	| 'reset'
 	| 'resumeSession'
 	| 'testEcho'
@@ -123,12 +123,15 @@ type WorkerRequestType = 'setup'
 	| 'createRecoveryCode'
 	| 'recoverLogin'
 	| 'resetSecondFactors'
+	| 'extendMailIndex'
 type MainRequestType = 'execNative'
 	| 'entityEvent'
 	| 'error'
 	| 'progress'
 	| 'updateIndexState'
 	| 'updateWebSocketState'
+	| 'counterUpdate'
+	| 'infoMessage'
 type NativeRequestType = 'init'
 	| 'generateRsaKey'
 	| 'rsaEncrypt'
@@ -155,6 +158,17 @@ type NativeRequestType = 'init'
 	| 'changeTheme'
 	| 'saveBlob'
 	| 'putFileIntoDownloads'
+	| 'findInPage'
+	| 'stopFindInPage'
+	| 'registerMailto'
+	| 'unregisterMailto'
+	| 'openNewWindow'
+	| 'showWindow'
+	| 'sendDesktopConfig'
+	| 'updateDesktopConfig'
+	| 'enableAutoLaunch'
+	| 'disableAutoLaunch'
+	| 'sendSocketMessage'
 	| 'putIntoSecureStorage'
 	| 'getFromSecureStorage'
 type JsRequestType = 'createMailEditor'
@@ -162,7 +176,14 @@ type JsRequestType = 'createMailEditor'
 	| 'showAlertDialog'
 	| 'openMailbox'
 	| 'keyboardSizeChanged'
+	| 'sendTranslations'
+	| 'print'
+	| 'openFindInPage'
+	| 'reportError'
 
+type WebContentsMessage
+	= 'setup-context-menu'
+	| 'open-context-menu'
 
 type Callback<T> = (err: ?Error, data?: T) => void
 type Command = (msg: Request) => Promise<any>
@@ -206,7 +227,7 @@ type ModelAssociation = {
 type EnvType = {
 	staticUrl: ?string, // if null the url from the browser is used
 	mode: "Browser" | "App" | "Test" | "Playground",
-	platformId: ?"ios" | ?"android",
+	platformId: ?"ios" | ?"android" | ?"darwin" | ?"linux" | ?"win32",
 	dist: boolean,
 	versionNumber: string,
 	timeout: number,
@@ -223,6 +244,7 @@ type WhitelabelCustomizations = {
 	germanLanguageCode: string,
 	registrationDomains: ?string[],
 	imprintUrl: ?string,
+	privacyStatementUrl: ?string,
 }
 
 declare var whitelabelCustomizations: ?WhitelabelCustomizations
@@ -286,7 +308,9 @@ type SearchResult = {
 	restriction: SearchRestriction,
 	results: IdTuple[];
 	currentIndexTimestamp: number;
-	moreResultsEntries: MoreResultsIndexEntry[];
+	moreResults: Array<MoreResultsIndexEntry>,
+	lastReadSearchIndexRow: Array<[string, ?number]>; // array of pairs (token, lastReadSearchIndexRowOldestElementTimestamp) lastRowReadSearchIndexRow: null = no result read, 0 = no more search results????
+	matchWordOrder: boolean;
 }
 
 type SearchIndexStateInfo = {
@@ -295,6 +319,8 @@ type SearchIndexStateInfo = {
 	mailIndexEnabled: boolean;
 	progress: number;
 	currentMailIndexTimestamp: number;
+	indexedMailCount: number;
+	failedIndexingUpTo: ?number;
 }
 
 type CreditCardData = {

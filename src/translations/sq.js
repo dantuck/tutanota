@@ -1,6 +1,4 @@
-//@flow
-
-const translation = {
+module.exports = {
 	"id": "83abbac2842c26560e8e784497ba8a7d",
 	"name": "sq",
 	"code": "sq",
@@ -16,7 +14,7 @@ const translation = {
 		"other"
 	],
 	"created_at": "2015-02-06T09:56:56Z",
-	"updated_at": "2018-12-12T13:43:19Z",
+	"updated_at": "2019-02-28T13:20:14Z",
 	"source_locale": {
 		"id": "fcd7471b347c8e517663e194dcddf237",
 		"name": "en",
@@ -177,7 +175,7 @@ const translation = {
 		"feedbackOnErrorInfo_msg": "Na vjen keq, një gabim ndodhi. Ju lutemi na tregoni në Gj. Angleze apo Gj. Gjermane se cilat hapa kanë dërguar tek ky gabim kështu që ne të mund ta rregullojmë. Mesazhi i juaj, të dhënat e gabimit, dhe identifikuesi i shfletuesit tuaj dërgohen të kriptuara tek ekipi i Tutanotës. Ju faleminderit!",
 		"fileAccessDeniedMobile_msg": "Qasja tek kapaciteti i jashtëm është mohuar. Ju mundeni që të aktivizoni atë tek parametrat e celularit tuaj. ",
 		"firstName_placeholder": "Emri",
-		"firstReminderAutomatic_msg": "fatkeqisisht, ne e kishim të pamundur të ua debitojmë shumën totale të faturës me numër {1} nga llogaria e juaj. Prandaj, ne kërkojmë nga ju që të azhurnoni të dhënat e pagesës suaj në 'Settings' -> 'Payment data' tek {2} dhe më pas fillo pagesën në 'Settings' -> 'Invoicing'",
+		"firstReminderAutomatic_msg": "fatkeqësisht, ne e kishim të pamundur të ua debitojmë shumën totale të faturës me numër {1} nga llogaria e juaj. Prandaj, ne kërkojmë nga ju që të përditësoni të dhënat e pagesës suaj në 'Settings' -> 'Payment' dhe më pas fillo pagesën. Ju do të shihni menjëherë nëse transaksioni ishte i sukseshëm. ",
 		"firstReminderSubject_msg": "Kujtues: Pagesa e vonuar",
 		"folderNameCreate_label": "Krijo dosje",
 		"folderNameInvalidExisting_msg": "Tashmë ka një dosje me këtë emër.",
@@ -216,8 +214,8 @@ const translation = {
 		"invoiceCountryInfoBusiness_msg": "Të lutem, zgjidhe shtetin ku banon.",
 		"invoiceCountryInfoConsumer_msg": "Kjo nevojitet për të vendosë nëse duhet me ta cekë tatimin mbi vlerën e shtuar në fatura.",
 		"invoiceCountry_label": "Vendi",
-		"invoiceMailBodyAutomatic_msg": "Është në dispozicion për ju një faturë e re me numrin {1}. Ju mundeni ta shkarkoni atë tek {1} në 'Settings' -> 'Invoicing'. Shuma totale në mënyrë automatike do t'iu debitohet",
-		"invoiceMailBodyOnAccount_msg": "Është në dispozicion për ju një faturë e re me numrin {1}. Ju mund ta shkarkoni atë tek {2} në 'Settings' -> 'Invoicing'.  Pagesa është e nevojshme 7 ditë pas datës së faturës.\n\nKujdes: llogaria e jonë bankare ka ndryshuar!",
+		"invoiceMailBodyAutomatic_msg": "Është në dispozicion për ju një faturë e re me numrin {1}. Ju mundeni ta shkarkoni atë tek {2}. Totali i shumës do të debitohet automatikisht",
+		"invoiceMailBodyOnAccount_msg": "Është në dispozicion për ju një faturë e re me numrin {1}. Ju mund ta shkarkoni atë tek {2}.  Pagesa duhet të bëhet 7 ditë pas datës së faturës.\n\n",
 		"invoiceMailSubject_msg": "Faturë e re nga Tutanota",
 		"invoiceNotPaidUser_msg": "Kërkojmë ndjesë, Juve nuk iu lejohet përkohësisht që të dërgoni mesazhe. Ju lutemi kontaktoni administratorin.",
 		"invoiceNotPaid_msg": "Kërkojmë ndjesë, aktualisht juve nuk iu lejohet të dërgoni mesazhe sepse së paku një nga faturat e juaja nuk është paguar. Ju lutemi azhurnoni të dhënat e juaja pagesore tek {1} në 'Settings' -> data' dhe më pas paguani faturën tek 'Settings'->'Invoicing'",
@@ -255,13 +253,11 @@ const translation = {
 		"languageHebrew_label": "hebraisht",
 		"languageHindi_label": "hindisht",
 		"languageHungarian_label": "hungarisht",
-		"languageIcelandic_label": "islandisht",
 		"languageIndonesian_label": "indonezisht",
 		"languageItalian_label": "italisht",
 		"languageJapanese_label": "japonisht",
 		"languageKorean_label": "koreisht",
 		"languageLithuanian_label": "lituanisht",
-		"languageMacedonian_label": "sllavomaqedonisht",
 		"languageNorwegian_label": "norvegjisht",
 		"languagePersian_label": "persisht",
 		"languagePolish_label": "polonisht",
@@ -271,7 +267,6 @@ const translation = {
 		"languageRussian_label": "rusisht",
 		"languageSerbian_label": "sërbisht",
 		"languageSlovak_label": "sllovakisht",
-		"languageSlovene_label": "sllovenisht",
 		"languageSpanish_label": "spanjisht",
 		"languageSwedish_label": "suedisht",
 		"languageTamil_label": "tamilisht",
@@ -281,8 +276,8 @@ const translation = {
 		"lastName_placeholder": "Mbiemri",
 		"linkedin_label": "LinkedIn",
 		"loading_msg": "Po hapet...",
-		"loggingOut_msg": "Po del...",
-		"loginFailedOften_msg": "Provove tepër herë. Mund të hysh prap, më së voni pas një ore.",
+		"loggingOut_msg": "Duke u çkyçur...",
+		"loginFailedOften_msg": "Shumë tentativa të dështuara login. Ju lutem provoni përsëri pas një ore. ",
 		"loginFailed_msg": "Të dhënat e hyrjes janë gabim. Të lutem, provo sërish.",
 		"loginNameInfoAdmin_msg": "Vullnetarisht: emri i përdorësit.",
 		"loginOtherAccount_action": "Llogari tjetër",
@@ -292,7 +287,7 @@ const translation = {
 		"mailAddressAliasesMaxNbr_label": "Mund të regjistrosh {1} adresa nofkë.",
 		"mailAddressAliases_label": "Adresat nofkë",
 		"mailAddressAvailable_msg": "Kjo adresë posteli është e lirë.",
-		"mailAddressBusy_msg": "Po vërtetohet adresa e postelit...",
+		"mailAddressBusy_msg": "Adresa juaj po verifikohet...\n",
 		"mailAddressDelay_msg": "Tepër shum kërkesa. Të lutem, provo sërish më vonë.",
 		"mailAddressInvalid_msg": "Adresa e postelit është gabim.",
 		"mailAddressNA_msg": "Kjo adresë posteli nuk është e lirë.",
@@ -330,10 +325,9 @@ const translation = {
 		"notAvailableInApp_msg": "Ky veprim nuk është i mundshëm në epin e pajisjes së dorës.",
 		"notFound404_msg": "Na vjen keq, por faqja që po e kërkon nuk u gjet. Shih mos vegëza ka ndonjë gabim dhe provo me e rihapë faqen.",
 		"notificationMailLanguage_label": "Gjuha e mesazhit njoftues",
-		"notificationMailSendFailureBody_msg": "Me keqardhje ju njoftojmë se mesazhi lajmërues në vijim nuk mund të dorëzohej.",
 		"notificationSettings_action": "Njoftime",
 		"ok_action": "Ani",
-		"oldPasswordInvalid_msg": "Fjalëkalimi gabim.",
+		"oldPasswordInvalid_msg": "Fjalëkalimi i vjetër gabim.",
 		"oldPasswordNeutral_msg": "Të lutem, jepe fjalëkalimin e tashëm.",
 		"oldPassword_label": "Fjalëkalimi i vjetër",
 		"oneMailSelected_msg": "Ke përzgjedhë 1 mesazh.",
@@ -365,8 +359,7 @@ const translation = {
 		"paymentMethodCreditCard_label": "Kartela e kreditit",
 		"paymentMethodOnAccount_label": "Blerje për këtë llogari",
 		"paymentMethod_label": "Mënyra e pagesës",
-		"paymentProviderNotAvailableError_msg": "Shërbyesi i pagesës nuk është gati. Të lutem, provo sërish më vonë.",
-		"paymentProviderNotAvailable_msg": "Shërbyesi i pagesës nuk është gati. Të lutem, provo më vonë sërish.",
+		"paymentProviderNotAvailableError_msg": "Shërbyesi i pagesës nuk është gati. Të lutem, provo më vonë sërish.",
 		"paymentProviderTransactionFailedError_msg": "Pagesa dështoi. Të lutem, provo më vonë ose përditësoji të dhënat e pagesës.",
 		"phone_label": "Telefoni",
 		"photoLibraryUsageDescription_msg": "Shto një foto nga libraria juaj si shtojcë",
@@ -411,7 +404,7 @@ const translation = {
 		"secondReminderAutomatic_msg": "Fatkeqsisht, ne nuk kemi pranuar shumën totale të faturës me numër {1}, Prandaj, ne kërkojmë nga ju që të bëni azhurnimin e të dhënave tuaja pagesore në 'Settings -> Payment kur jeni të kyqur tek {2} dhe fillo pagesën brenda dy javëve në 'Settings' -> 'Invoicing'. Përndryshe, ne duhet që të ç'aktivizojmë llogarinë tuaj.",
 		"secondReminderSubject_msg": "Kujtuesi i dytë / pagesa e vonuar",
 		"sender_label": "Dërguesi",
-		"sendingSms_msg": "Po dërgohet esemesi...",
+		"sendingSms_msg": "Mesazhi po dërgohet...",
 		"sending_msg": "Mesazhi po kriptohet dhe dërgohet tani.",
 		"sendMail_alt": "Dërgo mesazh në këtë adresë",
 		"send_action": "Dërgo",
@@ -478,5 +471,3 @@ const translation = {
 		"yourMessage_label": "Mesazhi i juaj"
 	}
 }
-export default translation
-export var __useDefault = translation

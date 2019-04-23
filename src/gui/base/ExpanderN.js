@@ -1,5 +1,6 @@
 // @flow
 import m from "mithril"
+import type {TranslationKey} from "../../misc/LanguageViewModel"
 import {lang} from "../../misc/LanguageViewModel"
 import {animations, height, opacity, transform} from "../../../src/gui/animation/Animations"
 import {addFlash, removeFlash} from "./Flash"
@@ -9,7 +10,6 @@ import {BootIcons} from "./icons/BootIcons"
 import {theme} from "../theme"
 import {neverNull} from "../../api/common/utils/Utils"
 import {px} from "../size"
-import type {TranslationKey} from "../../misc/LanguageViewModel"
 
 export type ExpanderAttrs = {
 	label: TranslationKey | lazy<string>,
@@ -74,7 +74,7 @@ class _ExpanderPanel {
 	_domPanel: HTMLElement;
 
 	view(vnode: Vnode<ExpanderPanelAttrs>) {
-		return m(".expander-panel.overflow-hidden", [
+		return m(".expander-panel.overflow-hidden.no-shrink", [
 			vnode.attrs.expanded() ? m("div", {
 				oncreate: vnode => {
 					this._domPanel = vnode.dom

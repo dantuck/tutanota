@@ -136,7 +136,7 @@ class Native internal constructor(private val activity: MainActivity) {
             "generateRsaKey" -> crypto.generateRsaKey(Utils.base64ToBytes(args.getString(0)))
             "rsaEncrypt" -> crypto.rsaEncrypt(args.getJSONObject(0), Utils.base64ToBytes(args.getString(1)), Utils.base64ToBytes(args.getString(2)))
             "rsaDecrypt" -> crypto.rsaDecrypt(args.getJSONObject(0), Utils.base64ToBytes(args.getString(1)))
-            "aesEncryptFile" -> crypto.aesEncryptFile(Utils.base64ToBytes(args.getString(0)), args.getString(1), Utils.base64ToBytes(args.getString(2)))
+            "aesEncryptFile" -> crypto.aesEncryptFile(Utils.base64ToBytes(args.getString(0)), args.getString(1), Utils.base64ToBytes(args.getString(2))).toJSON()
             "aesDecryptFile" -> {
                 val key = Utils.base64ToBytes(args.getString(0))
                 val fileUrl = args.getString(1)

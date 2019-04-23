@@ -1,4 +1,4 @@
-import type {EntityUpdateData} from "../src/api/main/EntityEventController"
+import type {EntityUpdateData} from "../src/api/main/EventController"
 import type {TranslationKey} from "../src/misc/LanguageViewModel"
 
 // FIXME change all declare function statements to declare type as otherwise, no types are checked (inferred)
@@ -167,21 +167,6 @@ type LogCategory = {[key: string]: string}
 type ThemeId = 'light' | 'dark' | 'custom'
 
 declare var navigator: Navigator;
-
-declare class DateTimeFormat {
-	constructor(lang: string, options?: Object): void;
-	format(d: Date): string;
-}
-
-declare class NumberFormat {
-	constructor(lang: string, options?: Object): void;
-	format(value: number): string;
-}
-
-declare class Intl {
-	static DateTimeFormat: DateTimeFormat;
-	static NumberFormat: NumberFormat;
-}
 
 type SanitizeResult = {
 	text: string,

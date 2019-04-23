@@ -30,19 +30,17 @@ import {TextFieldN, Type as TextFieldType} from "../gui/base/TextFieldN"
 import {CheckboxN} from "../gui/base/CheckboxN"
 import {CancelledError} from "../api/common/error/CancelledError"
 import {logins} from "../api/main/LoginController"
-import {CryptoError} from "../api/common/error/CryptoError"
-import {neverNull} from "../api/common/utils/Utils"
 import {MessageBoxN} from "../gui/base/MessageBoxN"
 import {Dialog} from "../gui/base/Dialog"
 import {assertMainOrNode, LOGIN_TITLE} from "../api/Env"
-import {getImprintLink} from "./LoginView"
+import {renderPrivacyAndImprintLinks} from "./LoginView"
 
 assertMainOrNode()
 
 export class ExternalLoginView {
 
-	_password: stream<string>;
-	_savePassword: stream<boolean>;
+	_password: Stream<string>;
+	_savePassword: Stream<boolean>;
 	_helpText: TranslationKey;
 	_errorMessageId: ?TranslationKey;
 	_userId: Id;
@@ -106,7 +104,7 @@ export class ExternalLoginView {
 				}),
 				m(".pt", m(ButtonN, {label: 'showMail_action', click: () => this._formLogin(), type: ButtonType.Login})),
 				m("p.center.statusTextColor", m("small", lang.get(this._helpText))),
-				renderImprintLink()
+				renderPrivacyAndImprintLinks()
 			]
 		}
 	}
@@ -291,7 +289,6 @@ export class ExternalLoginView {
 		return worker.sendExternalPasswordSms(this._userId, this._salt, phoneNumberId, lang.code, this._symKeyForPasswordTransmission).then(result => {
 			this._symKeyForPasswordTransmission = result.symKeyForPasswordTransmission
 			this._helpText = "smsSent_msg"
-			this._retrievePassword(result.autoAuthenticationId)
 			setTimeout(() => {
 				this._sendSmsAllowed = true
 				this._helpText = "smsResent_msg"
@@ -306,35 +303,4 @@ export class ExternalLoginView {
 		}).finally(() => m.redraw())
 	}
 
-	_retrievePassword(autoAuthenticationId: Id): Promise<void> {
-		if (logins.isUserLoggedIn()) {
-			return Promise.resolve()
-		}
-		return worker.retrieveExternalSmsPassword(this._userId, this._salt, autoAuthenticationId, neverNull(this._symKeyForPasswordTransmission))
-		             .then(password => {
-			             if (password) {
-				             this._password(password)
-				             return this._formLogin()
-			             } else if (!logins.isUserLoggedIn()) {
-				             // timeout and we are not already logged in by the user manually
-				             return this._retrievePassword(autoAuthenticationId)
-			             }
-		             })
-		             .catch(CryptoError, e => {
-			             this._helpText = "invalidPassword_msg"
-			             console.log("could not decrypt", e)
-		             })
-		             .catch(error => {
-			             this._helpText = "smsError_msg"
-			             console.log("could not send sms", error)
-		             }).finally(() => m.redraw())
-	}
-
-}
-
-export function renderImprintLink() {
-	return m("div.center.flex.flex-grow.items-end.justify-center.mb-l.mt-xl", m("a", {
-		href: getImprintLink(),
-		target: "_blank"
-	}, lang.get("imprint_label")))
 }

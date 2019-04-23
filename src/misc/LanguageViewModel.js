@@ -1,17 +1,18 @@
 // @flow
-import {startsWith} from "../api/common/utils/StringUtils"
 import {assertMainOrNodeBoot} from "../api/Env"
 import {asyncImport, downcast} from "../api/common/utils/Utils"
 import {client} from "./ClientDetector"
 import typeof en from "../translations/en"
+import type {TranslationKeyType} from "./TranslationKey"
+
+export type TranslationKey = TranslationKeyType
 
 assertMainOrNodeBoot()
-
-export type TranslationKey = $Keys<$PropertyType<en, "keys">> | "emptyString_msg"
 
 export type Language = {code: string, textId: TranslationKey}
 
 export const languages: Language[] = [
+	{code: 'ar', textId: 'languageArabic_label'},
 	{code: 'bg', textId: 'languageBulgarian_label'},
 	{code: 'ca', textId: 'languageCatalan_label'},
 	{code: 'cs', textId: 'languageCzech_label'},
@@ -22,8 +23,8 @@ export const languages: Language[] = [
 	{code: 'en', textId: 'languageEnglish_label'},
 	{code: 'es', textId: 'languageSpanish_label'},
 	{code: 'et', textId: 'languageEstonian_label'},
+	{code: 'fa_ir', textId: 'languagePersian_label'},
 	{code: 'fi', textId: 'languageFinnish_label'},
-	{code: 'fil', textId: 'languageFilipino_label'},
 	{code: 'fr', textId: 'languageFrench_label'},
 	{code: 'gl', textId: 'languageGalician_label'},
 	{code: 'hi', textId: 'languageHindi_label'},
@@ -33,8 +34,7 @@ export const languages: Language[] = [
 	{code: 'it', textId: 'languageItalian_label'},
 	{code: 'ja', textId: 'languageJapanese_label'},
 	{code: 'lt', textId: 'languageLithuanian_label'},
-	{code: 'mk', textId: 'languageMacedonian_label'},
-	{code: 'ms', textId: 'languageMalay_label'},
+	{code: 'lv', textId: 'languageLatvian_label'},
 	{code: 'nl', textId: 'languageDutch_label'},
 	{code: 'no', textId: 'languageNorwegian_label'},
 	{code: 'pl', textId: 'languagePolish_label'},
@@ -43,11 +43,8 @@ export const languages: Language[] = [
 	{code: 'ro', textId: 'languageRomanian_label'},
 	{code: 'ru', textId: 'languageRussian_label'},
 	{code: 'sk', textId: 'languageSlovak_label'},
-	{code: 'sq', textId: 'languageAlbanian_label'},
 	{code: 'sr', textId: 'languageSerbian_label'},
 	{code: 'sv', textId: 'languageSwedish_label'},
-	{code: 'sw', textId: 'languageSwahili_label'},
-	{code: 'ta', textId: 'languageTamil_label'},
 	{code: 'tr', textId: 'languageTurkish_label'},
 	{code: 'uk', textId: 'languageUkrainian_label'},
 	{code: 'vi', textId: 'languageVietnamese_label'},
@@ -57,12 +54,28 @@ export const languages: Language[] = [
 
 const infoLinks = {
 	"recoverCode_link": {
-		"de": "https://tutanota.uservoice.com/knowledgebase/articles/470716",
-		"en": "https://tutanota.uservoice.com/knowledgebase/articles/470717"
+		"de": "https://tutanota.com/de/howto/#reset",
+		"en": "https://tutanota.com/howto/#reset"
 	},
 	"2FA_link": {
-		"de": "https://tutanota.uservoice.com/knowledgebase/articles/1201945",
-		"en": "https://tutanota.uservoice.com/knowledgebase/articles/1201942"
+		"de": "https://tutanota.com/de/howto#2fa",
+		"en": "https://tutanota.com/howto#2fa"
+	},
+	"spamRules_link": {
+		"de": "https://tutanota.com/de/howto#spam",
+		"en": "https://tutanota.com/howto#spam"
+	},
+	"domainInfo_link": {
+		"de": "https://tutanota.com/de/howto/#custom-domain",
+		"en": "https://tutanota.com/howto#custom-domain"
+	},
+	"whitelabel_link": {
+		"de": "https://tutanota.com/de/howto#whitelabel",
+		"en": "https://tutanota.com/howto#whitelabel"
+	},
+	"webview_link": {
+		"de": "https://tutanota.com/howto/#webview",
+		"en": "https://tutanota.com/de/howto/#webview"
 	}
 }
 
@@ -82,18 +95,19 @@ class LanguageViewModel {
 	languageTag: string;
 	staticTranslations: Object;
 	formats: {
-		simpleDate: DateTimeFormat,
-		dateWithMonth: DateTimeFormat,
-		dateWithoutYear: DateTimeFormat,
-		simpleDateWithoutYear: DateTimeFormat,
-		dateWithWeekday: DateTimeFormat,
-		dateWithWeekdayAndYear: DateTimeFormat,
-		time: DateTimeFormat,
-		dateTime: DateTimeFormat,
-		priceWithCurrency: NumberFormat,
-		priceWithCurrencyWithoutFractionDigits: NumberFormat,
-		priceWithoutCurrency: NumberFormat,
-		priceWithoutCurrencyWithoutFractionDigits: NumberFormat
+		simpleDate: Intl.DateTimeFormat,
+		dateWithMonth: Intl.DateTimeFormat,
+		dateWithoutYear: Intl.DateTimeFormat,
+		simpleDateWithoutYear: Intl.DateTimeFormat,
+		dateWithWeekday: Intl.DateTimeFormat,
+		dateWithWeekdayAndYear: Intl.DateTimeFormat,
+		time: Intl.DateTimeFormat,
+		dateTime: Intl.DateTimeFormat,
+		dateTimeShort: Intl.DateTimeFormat,
+		priceWithCurrency: Intl.NumberFormat,
+		priceWithCurrencyWithoutFractionDigits: Intl.NumberFormat,
+		priceWithoutCurrency: Intl.NumberFormat,
+		priceWithoutCurrencyWithoutFractionDigits: Intl.NumberFormat
 	};
 
 	constructor() {
@@ -135,51 +149,57 @@ class LanguageViewModel {
 		this.languageTag = tag
 		if (client.dateFormat()) {
 			this.formats = {
-				simpleDate: new (Intl.DateTimeFormat: any)(tag, {day: 'numeric', month: 'numeric', year: 'numeric'}),
-				dateWithMonth: new (Intl.DateTimeFormat: any)(tag, {
+				simpleDate: new Intl.DateTimeFormat(tag, {day: 'numeric', month: 'numeric', year: 'numeric'}),
+				dateWithMonth: new Intl.DateTimeFormat(tag, {
 					day: 'numeric',
 					month: 'short',
 					year: 'numeric'
 				}),
-				dateWithoutYear: new (Intl.DateTimeFormat: any)(tag, {day: 'numeric', month: 'short'}),
-				simpleDateWithoutYear: new (Intl.DateTimeFormat: any)(tag, {
+				dateWithoutYear: Intl.DateTimeFormat(tag, {day: 'numeric', month: 'short'}),
+				simpleDateWithoutYear: Intl.DateTimeFormat(tag, {
 					day: 'numeric', month: 'numeric'
 				}),
-				dateWithWeekday: new (Intl.DateTimeFormat: any)(tag, {
+				dateWithWeekday: new Intl.DateTimeFormat(tag, {
 					weekday: 'short',
 					day: 'numeric',
 					month: 'short'
 				}),
-				dateWithWeekdayAndYear: new (Intl.DateTimeFormat: any)(tag, {
+				dateWithWeekdayAndYear: new Intl.DateTimeFormat(tag, {
 					weekday: 'short',
 					day: 'numeric',
 					month: 'short',
 					year: 'numeric'
 				}),
-				time: new (Intl.DateTimeFormat: any)(tag, {hour: 'numeric', minute: 'numeric'}),
-				dateTime: new (Intl.DateTimeFormat: any)(tag, {
+				time: new Intl.DateTimeFormat(tag, {hour: 'numeric', minute: 'numeric'}),
+				dateTime: new Intl.DateTimeFormat(tag, {
 					day: 'numeric',
 					month: 'short',
 					year: 'numeric',
 					hour: 'numeric',
 					minute: 'numeric'
 				}),
-				priceWithCurrency: new (Intl.NumberFormat: any)(tag, {
+				dateTimeShort: new Intl.DateTimeFormat(tag, {
+					day: 'numeric',
+					month: 'numeric',
+					year: 'numeric',
+					hour: 'numeric',
+				}),
+				priceWithCurrency: new Intl.NumberFormat(tag, {
 					style: 'currency',
 					currency: 'EUR',
 					minimumFractionDigits: 2
 				}),
-				priceWithCurrencyWithoutFractionDigits: new (Intl.NumberFormat: any)(tag, {
+				priceWithCurrencyWithoutFractionDigits: new Intl.NumberFormat(tag, {
 					style: 'currency',
 					currency: 'EUR',
 					maximiumFractionDigits: 0,
 					minimumFractionDigits: 0
 				}),
-				priceWithoutCurrency: new (Intl.NumberFormat: any)(tag, {
+				priceWithoutCurrency: new Intl.NumberFormat(tag, {
 					style: 'decimal',
 					minimumFractionDigits: 2
 				}),
-				priceWithoutCurrencyWithoutFractionDigits: new (Intl.NumberFormat: any)(tag, {
+				priceWithoutCurrencyWithoutFractionDigits: new Intl.NumberFormat(tag, {
 					style: 'decimal',
 					maximiumFractionDigits: 0,
 					minimumFractionDigits: 0
@@ -274,11 +294,8 @@ export function _getSubstitutedLanguageCode(tag: string, restrictions: ?string[]
 		if (code === 'zh_hk') {
 			language = languages.find(l => l.code === 'zh_tw')
 		} else {
-			const indexOfUnderscore = code.indexOf("_")
-			if (indexOfUnderscore > 0) {
-				const basePart = code.substring(0, indexOfUnderscore)
-				language = languages.find(l => startsWith(l.code, basePart) && (restrictions == null || restrictions.indexOf(l.code) !== -1))
-			}
+			let basePart = getBasePart(code)
+			language = languages.find(l => getBasePart(l.code) === basePart && (restrictions == null || restrictions.indexOf(l.code) !== -1))
 		}
 	}
 	if (language) {
@@ -289,6 +306,15 @@ export function _getSubstitutedLanguageCode(tag: string, restrictions: ?string[]
 		}
 	} else {
 		return null
+	}
+}
+
+function getBasePart(code: string): string {
+	const indexOfUnderscore = code.indexOf("_")
+	if (indexOfUnderscore > 0) {
+		return code.substring(0, indexOfUnderscore)
+	} else {
+		return code
 	}
 }
 

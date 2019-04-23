@@ -42,6 +42,7 @@ import {RecipientNotResolvedError} from "./error/RecipientNotResolvedError"
 import {FileNotFoundError} from "./error/FileNotFoundError"
 import {NativeAuthenticationError} from "./error/NativeAuthenticationError"
 import {FileOpenError} from "./error/FileOpenError"
+import {SseError} from "./error/SseError"
 
 export class Request {
 	type: WorkerRequestType | MainRequestType | NativeRequestType | JsRequestType;
@@ -112,7 +113,7 @@ export class Queue {
 
 	_handleMessage(message: Response | Request | RequestError) {
 		if (message.type === 'response') {
-			this._queue[message.id](null, (message: any).value)
+			this._queue[message.id](null, message.value)
 			delete this._queue[message.id]
 		} else if (message.type === 'requestError') {
 			this._queue[message.id](objToError((message: any).error), null)
@@ -136,7 +137,6 @@ export class Queue {
 			}
 		}
 	}
-
 
 	setCommands(commands: {[key: WorkerRequestType | MainRequestType | NativeRequestType | JsRequestType]: Command}) {
 		this._commands = commands
@@ -199,6 +199,7 @@ const ErrorNameToType = {
 	InsufficientStorageError,
 	CryptoError,
 	SessionKeyNotFoundError,
+	SseError,
 	ProgrammingError,
 	RecipientsNotFoundError,
 	RecipientNotResolvedError,
@@ -209,7 +210,9 @@ const ErrorNameToType = {
 	CancelledError,
 	Error,
 	"java.net.SocketTimeoutException": ConnectionError,
+	"java.net.ConnectException": ConnectionError,
 	"javax.net.ssl.SSLException": ConnectionError,
+	"javax.net.ssl.SSLHandshakeException": ConnectionError,
 	"java.io.EOFException": ConnectionError,
 	"java.net.UnknownHostException": ConnectionError,
 	"java.lang.SecurityException": PermissionError,
@@ -218,5 +221,6 @@ const ErrorNameToType = {
 	"de.tutao.tutanota.TutCrypto": CryptoError, // iOS app crypto error domain
 	"de.tutao.tutanota.FingerprintException": NativeAuthenticationError,
 	"android.content.ActivityNotFoundException": FileOpenError,
-	"de.tutao.tutanota.TutFileViewer": FileOpenError
+	"de.tutao.tutanota.TutFileViewer": FileOpenError,
+	"NSURLErrorDomain": ConnectionError
 }

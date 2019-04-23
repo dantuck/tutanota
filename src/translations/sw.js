@@ -1,6 +1,4 @@
-//@flow
-
-const translation = {
+module.exports = {
 	"id": "c57fa913a98a0086daa1428ecc1877ba",
 	"name": "sw",
 	"code": "sw",
@@ -16,7 +14,7 @@ const translation = {
 		"other"
 	],
 	"created_at": "2016-03-14T17:40:42Z",
-	"updated_at": "2018-12-12T13:43:19Z",
+	"updated_at": "2019-03-21T12:54:10Z",
 	"source_locale": null,
 	"keys": {
 		"accountSwitchAdditionalPackagesActive_msg": "Tafadhali kulemaza hifadhi ya kiganjani kwa kupitia au lakabu mfuko na kulemaza lakabu wote wa barua pepe kabla ya kubadilisha aina ya akaunti.",
@@ -78,6 +76,7 @@ const translation = {
 		"captchaInput_label": "Muda",
 		"catchAllMailbox_label": "Kamata kikashabarua zote",
 		"cc_label": "Cc",
+		"certificateError_msg": "Inyuguti zibanga ntago imeze uko igomba kumera , binashoboka ko idahuye na nizina",
 		"changeAdminPassword_msg": "Samahani, huruhusiwi kubadilisha nywila ya msimamizi mwingine",
 		"changePasswordCode_msg": "Nambari ya uthibitishaji:",
 		"changePassword_label": "Badilisha neno la siri",
@@ -122,6 +121,7 @@ const translation = {
 		"creditCardNumberFormat_msg": "Tafadhali weka namba ya kadi yako.",
 		"creditCardNumberInvalid_msg": "Kadi ya malipo ni batili.",
 		"currentlyBooked_label": "Maelezo ya jumla ya tiketi",
+		"customColorsInfo_msg": "Mugihe usize ahabugenewe hibara , ibara risa nurumuri niryo rikoreshwa",
 		"customDomainDeletePreconditionFailed_msg": "Tafadhali kuzima watumiaji wote na majina ya utani barua pepe iliyo miliki: {domainName}",
 		"customDomainDomainAssigned_msg": "Kikoa imepangiliwa tayari kwa akaunti yako.",
 		"customDomainErrorDnsLookupFailure_msg": "Duhusi ya DNS imeshindwa",
@@ -298,13 +298,11 @@ const translation = {
 		"languageHebrew_label": "Kiebrania",
 		"languageHindi_label": "Kihindi",
 		"languageHungarian_label": "Kihangaria",
-		"languageIcelandic_label": "Kiaislandi",
 		"languageIndonesian_label": "Kiindoneshia",
 		"languageItalian_label": "Kiitaliano",
 		"languageJapanese_label": "Kijapani",
 		"languageKorean_label": "Kikorea",
 		"languageLithuanian_label": "Kilithuania",
-		"languageMacedonian_label": "Kimasedonia",
 		"languageNorwegian_label": "Kinowiji",
 		"languagePersian_label": "Kipersian",
 		"languagePolish_label": "Kipolishi",
@@ -314,7 +312,6 @@ const translation = {
 		"languageRussian_label": "Kirusi",
 		"languageSerbian_label": "Kisabia",
 		"languageSlovak_label": "Kislovakia",
-		"languageSlovene_label": "Kislovenia",
 		"languageSpanish_label": "Kihispania",
 		"languageSwedish_label": "Kiswidi",
 		"languageTamil_label": "Kitamili",
@@ -383,7 +380,6 @@ const translation = {
 		"notAvailableInApp_msg": "kazi hii haipatikani katika programu ya simu.",
 		"notFound404_msg": "Samahani, lakini ukurasa wewe ni kuangalia kwa haijawahi kupatikana. Jaribu kuangalia URL kwa makosa na kugonga furahisha kifungo ya kivinjari chako.",
 		"notificationMailLanguage_label": "Lugha ya taarifa ya barua pepe",
-		"notificationMailSendFailureBody_msg": "Tunasikitika basi unajua kwamba barua pepe taarifa ifuatayo haukuweza kuwasilishwa.",
 		"notificationSettings_action": "Taarifa",
 		"no_label": "Hapana",
 		"number_label": "Idadi",
@@ -423,8 +419,7 @@ const translation = {
 		"paymentMethodCreditCard_label": "Kadi ya mkopo",
 		"paymentMethodOnAccount_label": "Nunua kwa akaunti",
 		"paymentMethod_label": "Njia ya malipo",
-		"paymentProviderNotAvailableError_msg": "Mtoaji wa malipo haipatikani. Tafadhali jaribu tena baadaye.",
-		"paymentProviderNotAvailable_msg": "Mtoa malipo haipatikani kwa sasa. Tafadhali jaribu tena baadae.",
+		"paymentProviderNotAvailableError_msg": "Mtoa malipo haipatikani kwa sasa. Tafadhali jaribu tena baadae.",
 		"paymentProviderTransactionFailedError_msg": "Shughuli ya malipo imeshindwa. Tafadhali jaribu tena baadaye au kusasisha data yako ya malipo.",
 		"phone_label": "Simu",
 		"photoLibraryUsageDescription_msg": "Ongeza picha kutoka maktaba yako kama kiambatanisho.",
@@ -571,5 +566,3 @@ const translation = {
 		"yourMessage_label": "Ujumbe wako"
 	}
 }
-export default translation
-export var __useDefault = translation

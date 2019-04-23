@@ -1,5 +1,6 @@
 // @flow
 import m from "mithril"
+import type {TranslationKey} from "../../misc/LanguageViewModel"
 import {lang} from "../../misc/LanguageViewModel"
 import {addFlash, removeFlash} from "./Flash"
 import {assertMainOrNodeBoot} from "../../api/Env"
@@ -8,11 +9,10 @@ import {Icon} from "./Icon"
 import {theme} from "../theme"
 import {styles} from "../styles"
 import type {NavButtonAttrs} from "./NavButtonN"
-import type {TranslationKey} from "../../misc/LanguageViewModel"
 
 assertMainOrNodeBoot()
 
-export const ButtonType = {
+export const ButtonType = Object.freeze({
 	Action: 'action',
 	ActionLarge: 'action-large', // action button with large icon
 	Primary: 'primary',
@@ -23,14 +23,14 @@ export const ButtonType = {
 	Bubble: 'bubble',
 	TextBubble: 'textBubble',
 	Toggle: 'toggle'
-}
+})
 export type ButtonTypeEnum = $Values<typeof ButtonType>;
 
-export const ButtonColors = {
+export const ButtonColors = Object.freeze({
 	Header: 'header',
 	Nav: 'nav',
 	Content: 'content',
-}
+})
 export type ButtonColorEnum = $Values<typeof ButtonColors>;
 
 function getColors(buttonColors: ?ButtonColorEnum) {
@@ -69,7 +69,7 @@ export type ButtonAttrs = {
 /**
  * A button.
  */
-class _Button {
+export class ButtonN implements MComponent<ButtonAttrs> {
 	_domButton: HTMLElement;
 
 	view(vnode: Vnode<LifecycleAttrs<ButtonAttrs>>) {
@@ -81,6 +81,7 @@ class _Button {
 			{
 				class: this.getButtonClasses(a).join(' '),
 				style: vnode.attrs.type === ButtonType.Login ? {
+					'border-radius': '3px',
 					'background-color': theme.content_accent,
 				} : {},
 				onclick: (event: MouseEvent) => this.click(event, a, this._domButton),
@@ -250,7 +251,6 @@ class _Button {
 	}
 }
 
-export const ButtonN: Class<MComponent<ButtonAttrs>> = _Button
 
 export function isVisible(a: NavButtonAttrs | ButtonAttrs) {
 	return (typeof a.isVisible !== "function") || a.isVisible()
